@@ -20,6 +20,8 @@ class AppThemes {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.deepPurple,
+    primarySwatch: Colors.deepPurple,
+
     iconTheme: IconThemeData(color: Colors.black),
     textTheme: _buildTextTheme(Typography.material2021().black),
   );
@@ -27,6 +29,7 @@ class AppThemes {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.deepPurple,
+    primarySwatch: Colors.deepPurple,
     iconTheme: IconThemeData(color: Colors.white),
     textTheme: _buildTextTheme(Typography.material2021().white),
   );

@@ -169,7 +169,7 @@ class HomePage extends StatelessWidget {
                          imageAsset:  'assets/images/timer.svg',
                          title: 'الوقت المتبقي',
                          onTap: (){
-
+                                Navigator.pushNamed(context, 'timer');
                          }
                      ),
                      FeatureCardComponent(
