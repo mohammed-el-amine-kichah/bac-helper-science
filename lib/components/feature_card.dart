@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class FeatureCardComponent extends StatelessWidget {
   final String imageAsset;
@@ -27,10 +28,10 @@ class FeatureCardComponent extends StatelessWidget {
           children: [
             SizedBox(height: 15,),
             AspectRatio(
-              aspectRatio: 16 / 11, // Adjust the aspect ratio as needed
-              child: Image.asset(
+              aspectRatio: 16 / 10, // Adjust the aspect ratio as needed
+              child: SvgPicture.asset(
                 imageAsset,
-                fit: BoxFit.cover, // Adjust as needed
+                fit: BoxFit.contain, // Adjust as needed
               ),
             ),
             Padding(

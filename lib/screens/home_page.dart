@@ -106,51 +106,37 @@ class HomePage extends StatelessWidget {
                    crossAxisSpacing: 8,
                    mainAxisSpacing: 8,
                    children: [
-                     FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
-                         title: 'دروس',
-                         onTap: (){
-
-                         }
-                         ),
-                     FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
-                         title: 'مواضيع و حلول',
-                         onTap: (){
-
-                         }
-                     ),
 
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/progress.svg',
                          title: 'نسبة التقدم',
                          onTap: (){
 
                          }
                      ),
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/quiz.svg',
                          title: 'اختبر معلوماتك',
                          onTap: (){
 
                          }
                      ),
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/to_do_list.svg',
                          title: 'قائمة المهام',
                          onTap: (){
 
                          }
                      ),
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/flash_card.svg',
                          title: 'بطاقات المراجعة',
                          onTap: (){
 
                          }
                      ),
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/resources.svg',
                          title: 'مصادر',
                          onTap: (){
 
@@ -158,22 +144,36 @@ class HomePage extends StatelessWidget {
                      ),
 
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/exo.svg',
                          title: 'تمارين',
+                         onTap: (){
+
+                         }
+                     ),
+                     FeatureCardComponent(
+                         imageAsset:  'assets/images/lessons.svg',
+                         title: 'دروس',
+                         onTap: (){
+
+                         }
+                     ),
+                     FeatureCardComponent(
+                         imageAsset:  'assets/images/sujet_bac.svg',
+                         title: 'مواضيع و حلول',
                          onTap: (){
 
                          }
                      ),
 
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/timer.svg',
                          title: 'الوقت المتبقي',
                          onTap: (){
 
                          }
                      ),
                      FeatureCardComponent(
-                         imageAsset:  'assets/images/calculator3.png',
+                         imageAsset:  'assets/images/calculator_icon.svg',
                          title: 'حساب المعدل',
                          onTap: (){
 
