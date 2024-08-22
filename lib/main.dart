@@ -1,6 +1,6 @@
 import 'package:bac_helper_sc/provider/app_themes.dart';
 import 'package:bac_helper_sc/provider/dark_mode.dart';
-import 'package:bac_helper_sc/screens/home_page.dart';
+import 'package:bac_helper_sc/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'BAC App',
           theme: themeNotifier.isDarkMode ? AppThemes.darkTheme : AppThemes.lightTheme,
-          home:  HomePage(), // Your HomePage screen
+          home:  SplashScreen(), // Your HomePage screen
         );
       }
     );

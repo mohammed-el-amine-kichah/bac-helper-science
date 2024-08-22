@@ -15,13 +15,15 @@ dependencies:
 
   flutter:
     sdk: flutter
+  lottie: ^3.1.2
+  animated_splash_screen: ^1.3.0
 
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
   fonts:
@@ -42,6 +44,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/animation/
 
   uses-material-design: true
 
