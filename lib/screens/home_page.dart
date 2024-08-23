@@ -176,6 +176,7 @@ class HomePage extends StatelessWidget {
                          imageAsset:  'assets/images/calculator_icon.svg',
                          title: 'حساب المعدل',
                          onTap: (){
+                           Navigator.pushNamed(context, 'calculator');
 
                          }
                      ),

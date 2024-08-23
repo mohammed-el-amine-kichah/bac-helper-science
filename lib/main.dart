@@ -1,5 +1,6 @@
 import 'package:bac_helper_sc/provider/app_themes.dart';
 import 'package:bac_helper_sc/provider/dark_mode.dart';
+import 'package:bac_helper_sc/screens/average_calculator.dart';
 import 'package:bac_helper_sc/screens/splash_screen.dart';
 import 'package:bac_helper_sc/screens/timer.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           home:  SplashScreen(),
           routes: {
             'timer' :(context) => TimerScreen(),
+            'calculator' : (context) => AverageCalculator(),
           },
 
         );

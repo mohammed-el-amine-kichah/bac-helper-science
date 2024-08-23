@@ -133,13 +133,14 @@ class _TimerScreenState extends State<TimerScreen> {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 15,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.25,
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: SvgPicture.asset('assets/images/timer.svg', fit: BoxFit.cover,),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.15,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.10,),
               if (_dateTime != null)
                 Text(
                   'عدد الأشــهر الـمتبقية: $months\n'
@@ -150,14 +151,16 @@ class _TimerScreenState extends State<TimerScreen> {
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.right,
                 ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.15,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
               if (_isTimerRunning)
                 Text(
                   'تاريخ البكالوريا هو: $formattedDate',
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 20,fontWeight:FontWeight.w500 ),
+
+
                   textAlign: TextAlign.right,
                 ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03,),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
