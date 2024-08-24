@@ -41,7 +41,21 @@
       "answer": "Pacific Ocean"
     }
   ],
-  "الاجتماعيات": [
+  "الجغرافيا": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "التاريخ": [
     {
       "question": "What is the chemical symbol for gold?",
       "answer": "Au"

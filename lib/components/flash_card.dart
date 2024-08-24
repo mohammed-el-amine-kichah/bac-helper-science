@@ -29,45 +29,10 @@ Future<List<FlashCard>> loadFlashCards(String moduleId) async {
   return [];
 }
 
-Widget buildCardList(BuildContext context, String moduleId) {
-  return FutureBuilder<List<FlashCard>>(
-    future: loadFlashCards(moduleId),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator());
-      } else if (snapshot.hasError) {
-        return Center(child: Text('Error: ${snapshot.error}'));
-      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-        return Center(child: Text('No flash cards available'));
-      }
-
-      List<FlashCard> cards = snapshot.data!;
-      return Container(
-        color: Colors.transparent,
-        width: double.infinity,
-        height: (MediaQuery.of(context).size.height) * 0.4,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: cards.length,
-          itemBuilder: (context, index) {
-            return Row(
-              children: [
-                if (index == 0) SizedBox(width: 10),
-                buildFlashCardWidget(context, cards[index].question, cards[index].answer),
-                SizedBox(width: (MediaQuery.of(context).size.width) * 0.1),
-                if (index == cards.length - 1) SizedBox(width: 10),
-              ],
-            );
-          },
-        ),
-      );
-    },
-  );
-}
 
 // Your existing buildFlashCardWidget, buildBackFace, and buildFrontFace functions remain the same
 Widget buildFlashCardWidget(
-    BuildContext context, String question, String answer) {
+    BuildContext context, String question, String answer , ) {
   return Container(
     height: (MediaQuery.of(context).size.height) * 0.4,
     width: (MediaQuery.of(context).size.width) * 0.8,
@@ -111,7 +76,7 @@ Widget buildBackFace(BuildContext context, String answer) {
 Widget buildFrontFace(BuildContext context, String question) {
   return Container(
     decoration: BoxDecoration(
-      color: Colors.deepPurple.shade300,
+      color: Colors.grey.shade300,
       borderRadius: BorderRadius.circular(24),
     ),
     child: Center(child: Padding(

@@ -28,13 +28,26 @@ class ModulesScreen extends StatelessWidget {
       Subject(name: 'اللغة العربية', asset: 'assets/images/lessons.svg'),
       Subject(name: 'اللغة الفرنسية', asset: 'assets/images/lessons.svg'),
       Subject(name: 'اللغة الانجليزية', asset: 'assets/images/lessons.svg'),
-      Subject(name: 'الاجتماعيات', asset: 'assets/images/lessons.svg'),
+      Subject(name: 'التاريخ', asset: 'assets/images/lessons.svg'),
+      Subject(name: 'الجغرافيا', asset: 'assets/images/lessons.svg'),
+
       Subject(name: 'العلوم الاسلامية', asset: 'assets/images/lessons.svg'),
       Subject(name: 'الفلسفة', asset: 'assets/images/lessons.svg'),
     ];
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          leading: GestureDetector(
+              child: Icon(Icons.arrow_back,color: Colors.white,),
+              onTap: (){
+                Navigator.pop(context);
+              }
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.deepPurple,
+          title: Text('اختر المادة',style: TextStyle(color: Colors.white,fontSize: 24),),
+        ),
         body: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
@@ -65,7 +78,8 @@ class ModulesScreen extends StatelessWidget {
                           )
                       ).toList(),
                     )
-                )
+                ),
+                const SizedBox(height: 10),
               ]
           ),
         ),
