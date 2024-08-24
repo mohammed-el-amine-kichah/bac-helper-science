@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
           theme: themeNotifier.isDarkMode ? AppThemes.darkTheme : AppThemes.lightTheme,
           home:  SplashScreen(),
           routes: {
-            'timer' :(context) => TimerScreen(),
-            'calculator' : (context) => AverageCalculator(),
+            'timer' :(context) => const TimerScreen(),
+            'calculator' : (context) => const AverageCalculator(),
           },
 
         );

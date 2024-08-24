@@ -1,0 +1,132 @@
+{
+  "علوم الطبيعة والحياة": [
+    {
+      "question":"q",
+      "answer": "Paris"
+    },
+    {
+      "question": "Who wrote 'Romeo and Juliet'?",
+      "answer": "William Shakespeare"
+    },
+    {
+      "question": "What is the largest planet in our solar system?",
+      "answer": "Jupiter"
+    }
+  ],
+  "الرياضيات": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "العلوم الفزيائية": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "الاجتماعيات": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "اللغة الانجليزية": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "اللغة الفرنسية": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "اللغة العربية": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "العلوم الاسلامية": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ],
+  "الفلسفة": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    },
+    {
+      "question": "Who painted the Mona Lisa?",
+      "answer": "Leonardo da Vinci"
+    },
+    {
+      "question": "What is the largest ocean on Earth?",
+      "answer": "Pacific Ocean"
+    }
+  ]
+}
+
+
+
+

@@ -85,26 +85,33 @@ class _AverageCalculatorState extends State<AverageCalculator> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Column(
-              children: [
-                ..._subjects.map((subject) => _buildSubjectField(subject)),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _calculateAndShowResult,
-                  child: Text('حساب المعدل', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.deepPurple,
-                    fixedSize: Size(MediaQuery.of(context).size.width * 0.7, 60),
-                  ),
+        child: Consumer<ThemeNotifier>(
+          builder: (context, themeNotifier, child) {
+            return Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Column(
+                  children: [
+                    ..._subjects.map((subject) => _buildSubjectField(subject)),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _calculateAndShowResult,
+                      child: Text(
+                        'حساب المعدل',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.deepPurple,
+                        fixedSize: Size(MediaQuery.of(context).size.width * 0.7, 60),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -131,7 +138,7 @@ class _AverageCalculatorState extends State<AverageCalculator> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           helperText: 'المعامل: ${subject.weight}',
@@ -168,13 +175,18 @@ class _AverageCalculatorState extends State<AverageCalculator> {
             if (!subject.optional) {
               return 'الرجاء إدخال العلامة';
             }
-            return null;  // Allow empty field for optional subjects
+            return null; // Allow empty field for optional subjects
           }
           double? num = double.tryParse(value);
           if (num == null || num < 0 || num > 20) {
             return 'الرجاء إدخال رقم صحيح (0-20)';
           }
           return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: (value) {
+          // This will trigger validation every time the field changes
+          Form.of(context).validate();
         },
       ),
     );
@@ -186,9 +198,7 @@ class _AverageCalculatorState extends State<AverageCalculator> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Center(
-              child: Text(average > 10 ? 'ناجح':'راسب'),
-              ),
+          title: Center(child: Text(average > 10 ? 'ناجح' : 'راسب')),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -201,10 +211,7 @@ class _AverageCalculatorState extends State<AverageCalculator> {
               children: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-
-                     child:  Text('موافق'),
-
-
+                  child: Text('موافق'),
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(MediaQuery.of(context).size.width * 0.3, 30),
                     backgroundColor: Colors.deepPurple,

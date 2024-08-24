@@ -23,10 +23,10 @@ class SplashScreen extends StatelessWidget {
           ),
           const SizedBox(height: 15,),
           const Text('رفيق البكالوريا',
-              style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
+              style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color : Colors.black)),
           const SizedBox(height: 10,),
           const Text('شعبة علوم تجريبية',
-              style: TextStyle(fontSize: 35,)),
+              style: TextStyle(fontSize: 35,color : Colors.black)),
 
         ],
 

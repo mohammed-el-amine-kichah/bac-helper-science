@@ -1,7 +1,13 @@
+
+
 import 'package:bac_helper_sc/components/feature_card.dart';
+import 'package:bac_helper_sc/screens/modules_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../models/content_type.dart';
 import '../provider/dark_mode.dart';
+
 
 class HomePage extends StatelessWidget {
   @override
@@ -48,29 +54,50 @@ class HomePage extends StatelessWidget {
           ],
         ),
         drawer: Drawer(
+
+          width: MediaQuery.of(context).size.width * 0.75,
           child: Container(
-            color: themeNotifier.isDarkMode ? Colors.deepPurple : Colors.deepPurple[100],
+            color: Colors.deepPurple,
             child: ListView(
               children: [
-                DrawerHeader(child: Text('رفيق البكالوريا',textDirection: TextDirection.rtl)),
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple, // Background color of the drawer header
+
+                  ),
+
+                  child: Align(
+                    alignment: Alignment.center, // Centers the content inside the DrawerHeader
+                    child: Text(
+                      'رفيق البكالوريا',
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24, // Adjust the font size as needed
+                        fontWeight: FontWeight.bold, // Optional: makes the text bold
+                      ),
+                    ),
+                  ),
+                ),
                 ListTile(
-                  leading: Icon(Icons.apps),
-                  title: Text("تطبيقاتنا",textDirection: TextDirection.rtl,),
+                  leading: Icon(Icons.apps,color: Colors.white),
+                  title: Text("تطبيقاتنا",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 10,),
                 ListTile(
                   leading: Icon(Icons.star, color: Colors.yellow),
-                  title: Text("تقييم التطبيق",textDirection: TextDirection.rtl,),
+                  title: Text("تقييم التطبيق",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 10,),
                 ListTile(
-                  leading: Icon(Icons.feedback),
-                  title: Text("اقتراح فكرة",textDirection: TextDirection.rtl,),
+                  leading: Icon(Icons.feedback,color: Colors.white,),
+                  title: Text("اقتراح فكرة",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
+                  onTap: _launchGoogleForm,
                 ),
                 const SizedBox(height: 10,),
                 ListTile(
-                  leading: Icon(Icons.info) ,
-                  title: Text("حول التطبيق",textDirection: TextDirection.rtl,),
+                  leading: Icon(Icons.info,color: Colors.white) ,
+                  title: Text("حول التطبيق",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
                 ),
               ],
 
@@ -132,7 +159,12 @@ class HomePage extends StatelessWidget {
                          imageAsset:  'assets/images/flash_card.svg',
                          title: 'بطاقات المراجعة',
                          onTap: (){
-
+                           Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                               builder: (context) => ModulesScreen(mycontentType: LearningContentType.flashCards),
+                           ),
+                           );
                          }
                      ),
                      FeatureCardComponent(
@@ -154,7 +186,12 @@ class HomePage extends StatelessWidget {
                          imageAsset:  'assets/images/lessons.svg',
                          title: 'دروس',
                          onTap: (){
-
+                           Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                               builder: (context) => ModulesScreen(mycontentType: LearningContentType.lessons),
+                           ),
+                           );
                          }
                      ),
                      FeatureCardComponent(
@@ -190,5 +227,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+  void _launchGoogleForm() async {
+    final Uri googleFormUrl = Uri.parse('https://forms.gle/VRsjy6QZkS4WvD399');  // Replace with your actual Google Form URL
+
+    if (!await launchUrl(googleFormUrl, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $googleFormUrl';
+    }
   }
 }
