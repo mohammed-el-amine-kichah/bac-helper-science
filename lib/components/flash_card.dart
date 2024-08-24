@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:provider/provider.dart';
+
+import '../provider/dark_mode.dart';
 
 class FlashCard {
   final String question;
@@ -59,29 +62,33 @@ Widget buildFlashCardWidget(
 }
 
 Widget buildBackFace(BuildContext context, String answer) {
+  final themeNotifier = Provider.of<ThemeNotifier>(context);
   return Container(
     decoration: BoxDecoration(
-      color: Colors.grey,
+
+      color: themeNotifier.isDarkMode ? Colors.black87 : Colors.grey.shade300,
       borderRadius: BorderRadius.circular(24),
     ),
     child: Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Text(answer,style: TextStyle(fontSize: 20)),
+        child: Text(answer,style: TextStyle(fontSize: 24),textAlign: TextAlign.center,),
       ),
     ),
   );
 }
 
 Widget buildFrontFace(BuildContext context, String question) {
+  final themeNotifier = Provider.of<ThemeNotifier>(context);
   return Container(
     decoration: BoxDecoration(
-      color: Colors.grey.shade300,
+      color: themeNotifier.isDarkMode ? Colors.black87 : Colors.grey.shade300,
       borderRadius: BorderRadius.circular(24),
     ),
-    child: Center(child: Padding(
+    child: Center(
+        child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Text(question,style: TextStyle(fontSize: 24),textAlign: TextAlign.end,),
+      child: Text(question,style: TextStyle(fontSize: 24),textAlign: TextAlign.center,),
     )),
   );
 }
