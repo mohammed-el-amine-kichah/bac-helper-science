@@ -11,20 +11,23 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeNotifier(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeNotifier>(
       builder: (context, themeNotifier, child) {
         return MaterialApp(
+
           title: 'BAC App',
           theme: themeNotifier.isDarkMode ? AppThemes.darkTheme : AppThemes.lightTheme,
-          home:  SplashScreen(),
+          home:  const SplashScreen(),
           routes: {
             'timer' :(context) => const TimerScreen(),
             'calculator' : (context) => const AverageCalculator(),

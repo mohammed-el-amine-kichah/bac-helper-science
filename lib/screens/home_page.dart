@@ -10,6 +10,8 @@ import '../provider/dark_mode.dart';
 
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
@@ -31,7 +33,7 @@ class HomePage extends StatelessWidget {
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.menu,
                   color: Colors.white,
                 ),
@@ -60,7 +62,7 @@ class HomePage extends StatelessWidget {
             color: Colors.deepPurple,
             child: ListView(
               children: [
-                DrawerHeader(
+                const DrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.deepPurple, // Background color of the drawer header
 
@@ -79,23 +81,23 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.apps,color: Colors.white),
                   title: Text("تطبيقاتنا",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 10,),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.star, color: Colors.yellow),
                   title: Text("تقييم التطبيق",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(height: 10,),
                 ListTile(
-                  leading: Icon(Icons.feedback,color: Colors.white,),
-                  title: Text("اقتراح فكرة",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
+                  leading: const Icon(Icons.feedback,color: Colors.white,),
+                  title: const Text("اقتراح فكرة",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
                   onTap: _launchGoogleForm,
                 ),
                 const SizedBox(height: 10,),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.info,color: Colors.white) ,
                   title: Text("حول التطبيق",textDirection: TextDirection.rtl,style: TextStyle(color: Colors.white)),
                 ),
@@ -106,7 +108,7 @@ class HomePage extends StatelessWidget {
         ),
         body: Container(
           width: double.infinity,
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(crossAxisAlignment: CrossAxisAlignment.center,
            children: [
             Text(
@@ -126,7 +128,7 @@ class HomePage extends StatelessWidget {
                ),
              ),
 
-             SizedBox(height: 20,),
+             const SizedBox(height: 20,),
              Expanded(
                  child: GridView.count(
                      crossAxisCount: 2,
@@ -162,7 +164,7 @@ class HomePage extends StatelessWidget {
                            Navigator.push(
                                context,
                                MaterialPageRoute(
-                               builder: (context) => ModulesScreen(mycontentType: LearningContentType.flashCards),
+                               builder: (context) => const ModulesScreen(mycontentType: LearningContentType.flashCards),
                            ),
                            );
                          }
@@ -189,7 +191,7 @@ class HomePage extends StatelessWidget {
                            Navigator.push(
                                context,
                                MaterialPageRoute(
-                               builder: (context) => ModulesScreen(mycontentType: LearningContentType.lessons),
+                               builder: (context) => const ModulesScreen(mycontentType: LearningContentType.lessons),
                            ),
                            );
                          }

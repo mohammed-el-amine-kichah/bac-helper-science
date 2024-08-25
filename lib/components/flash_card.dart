@@ -4,51 +4,84 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
 
+import '../models/database_helper.dart';
 import '../provider/dark_mode.dart';
 
 class FlashCard {
   final String question;
   final String answer;
+  final int?  id;
 
-  FlashCard({required this.question, required this.answer});
+  FlashCard({this.id,required this.question, required this.answer});
 
+  // Convert a map to a FlashCard
   factory FlashCard.fromJson(Map<String, dynamic> json) {
     return FlashCard(
-      question: json['question'],
-      answer: json['answer'],
+      id: json['id'] as int?,
+      question: json['question'] as String,
+      answer: json['answer'] as String,
     );
+  }
+
+  // Convert a FlashCard to a map
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'question': question,
+      'answer': answer,
+    };
   }
 }
 
 Future<List<FlashCard>> loadFlashCards(String moduleId) async {
+  List<FlashCard> cards = [];
+
+  // Load cards from JSON file
   final String jsonString = await rootBundle.loadString('assets/data/flash_cards.json');
   final Map<String, dynamic> jsonData = json.decode(jsonString);
 
   if (jsonData.containsKey(moduleId)) {
-    return (jsonData[moduleId] as List)
+    cards.addAll((jsonData[moduleId] as List)
         .map((item) => FlashCard.fromJson(item))
-        .toList();
+        .toList());
   }
-  return [];
+
+  // Load cards from SQLite
+  final dbCards = await DatabaseHelper.instance.getUserAddedFlashCards(moduleId);
+  cards.addAll(dbCards);
+
+  return cards;
+}
+// custome flash card to database
+Future<void> addFlashCard(String moduleId, String question, String answer) async {
+  final newCard = FlashCard(question: question, answer: answer);
+  await DatabaseHelper.instance.insertFlashCard(newCard, moduleId);
 }
 
+Future<int> updateFlashCard(int id, String question, String answer) async {
+  final db = await DatabaseHelper.instance.database;
+  return await db.update(
+    'flashcards',
+    {'question': question, 'answer': answer},
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
 
-// Your existing buildFlashCardWidget, buildBackFace, and buildFrontFace functions remain the same
+Future<int> deleteFlashCard(int id) async {
+  final db = await DatabaseHelper.instance.database;
+  return await db.delete(
+    'flashcards',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
+}
+
 Widget buildFlashCardWidget(
     BuildContext context, String question, String answer , ) {
   return Container(
-    height: (MediaQuery.of(context).size.height) * 0.4,
-    width: (MediaQuery.of(context).size.width) * 0.8,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(24),
-      // Add a subtle shadow for depth
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.1),
-          blurRadius: 10,
-          spreadRadius: 2,
-        ),
-      ],
     ),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(24),
@@ -66,13 +99,13 @@ Widget buildBackFace(BuildContext context, String answer) {
   return Container(
     decoration: BoxDecoration(
 
-      color: themeNotifier.isDarkMode ? Colors.black87 : Colors.grey.shade300,
+      color: themeNotifier.isDarkMode ? Colors.black54: Colors.grey.shade200,
       borderRadius: BorderRadius.circular(24),
     ),
     child: Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Text(answer,style: TextStyle(fontSize: 24),textAlign: TextAlign.center,),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Text(answer,style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,),
       ),
     ),
   );
@@ -82,13 +115,13 @@ Widget buildFrontFace(BuildContext context, String question) {
   final themeNotifier = Provider.of<ThemeNotifier>(context);
   return Container(
     decoration: BoxDecoration(
-      color: themeNotifier.isDarkMode ? Colors.black87 : Colors.grey.shade300,
+      color: themeNotifier.isDarkMode ? Colors.grey.withOpacity(0.03) : Colors.grey.shade200,
       borderRadius: BorderRadius.circular(24),
     ),
     child: Center(
         child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Text(question,style: TextStyle(fontSize: 24),textAlign: TextAlign.center,),
+      child: Text(question,style: const TextStyle(fontSize: 24),textAlign: TextAlign.center,),
     )),
   );
 }

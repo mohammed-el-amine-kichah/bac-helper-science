@@ -31,7 +31,7 @@ class SplashScreen extends StatelessWidget {
         ],
 
       ),
-      nextScreen:  HomePage(),
+      nextScreen:  const HomePage(),
       splashIconSize: 500, // Adjusted size
     );
 

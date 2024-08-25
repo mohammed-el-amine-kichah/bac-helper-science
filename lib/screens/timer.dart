@@ -85,12 +85,12 @@ class _TimerScreenState extends State<TimerScreen> {
     showDatePicker(
       context: context,
       initialDate: DateTime(2025,6,13),
-      firstDate: DateTime.now().add(Duration(days: 1)),
+      firstDate: DateTime.now().add(const Duration(days: 1)),
       lastDate: DateTime(2026),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: Colors.deepPurple,
               onPrimary: Colors.white,
               onSurface: Colors.black,
@@ -155,7 +155,7 @@ class _TimerScreenState extends State<TimerScreen> {
               if (_isTimerRunning)
                 Text(
                   'تاريخ البكالوريا هو: $formattedDate',
-                  style: TextStyle(fontSize: 20,fontWeight:FontWeight.w500 ),
+                  style: const TextStyle(fontSize: 20,fontWeight:FontWeight.w500 ),
 
 
                   textAlign: TextAlign.right,
@@ -176,7 +176,7 @@ class _TimerScreenState extends State<TimerScreen> {
                 },
                 child:  Text(
                   _isTimerRunning ? 'ايقاف المؤقت' : 'اضافة تاريخ',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
             ],

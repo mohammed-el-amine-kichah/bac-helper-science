@@ -4,17 +4,18 @@ import 'package:provider/provider.dart';
 import '../components/flash_card.dart';
 import '../models/content_type.dart';
 import '../screens/lessons_screen.dart';
+import 'manage_flash_cards_screen.dart';
 
 class ContentPage extends StatelessWidget {
   final LearningContentType contentType;
   final String moduleName;
 
-  ContentPage({required this.contentType, required this.moduleName});
+  const ContentPage({super.key, required this.contentType, required this.moduleName});
 
   @override
   Widget build(BuildContext context) {
     if (contentType == LearningContentType.lessons) {
-      return LessonsScreen();
+      return const LessonsScreen();
     } else {
       return ScFlashCard(moduleName: moduleName);
     }
@@ -24,7 +25,7 @@ class ContentPage extends StatelessWidget {
 class ScFlashCard extends StatefulWidget {
   final String moduleName;
 
-  const ScFlashCard({Key? key, required this.moduleName}) : super(key: key);
+  const ScFlashCard({super.key, required this.moduleName});
 
   @override
   _ScFlashCardState createState() => _ScFlashCardState();
@@ -44,12 +45,13 @@ class _ScFlashCardState extends State<ScFlashCard> {
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final bool isDarkMode = Provider.of<ThemeNotifier>(context).isDarkMode;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           leading: GestureDetector(
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back,
               color: Colors.white,
             ),
@@ -61,194 +63,44 @@ class _ScFlashCardState extends State<ScFlashCard> {
           backgroundColor: Colors.deepPurple,
           title: Text(
             widget.moduleName,
-            style: TextStyle(color: Colors.white, fontSize: 24),
+            style: const TextStyle(color: Colors.white, fontSize: 24),
           ),
         ),
         body: FutureBuilder<List<FlashCard>>(
           future: loadFlashCards(widget.moduleName),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return const Center(child: Text('خطأ فني بسيط، قم بالابلاغ عن المشكلة'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No flash cards available'));
+              return const Center(child: Text('لا توجد بطاقات '));
             }
 
             cards = snapshot.data!;
-            return SingleChildScrollView(
-              child: Center(
-                child: Column(
+            return Stack(
+              children: [
+                Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            showDialog(context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                content: SizedBox(
-                                  height: 430,
-                                  child: Center(
-                                      child: Column(
-                                        children: [
-                                          TextFormField(
-                                            maxLines: 5,
-                                            textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
-                                              filled: true,
-                                              label: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                                    child: Text(
-                                                      'السؤال',
-                                                      style: TextStyle(
-                                                        color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(24),
-                                                borderSide: BorderSide(
-                                                  color: themeNotifier.isDarkMode ? Colors.blueAccent : Colors.grey.shade300,
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(24),
-                                                borderSide: BorderSide(
-                                                  color: themeNotifier.isDarkMode ? Colors.redAccent : Colors.red,
-                                                ),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(24),
-                                                borderSide: BorderSide(
-                                                  color: themeNotifier.isDarkMode ? Colors.blueAccent : Colors.grey.shade300,
-                                                ),
-                                              ),
-                                            ),
-                                            keyboardType: TextInputType.text,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty)
-                                                  return 'الرجاء ادخال السؤال ';
-                                              return null;
-                                            },
-                                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                                            onChanged: (value) {
-                                              // This will trigger validation every time the field changes
-                                              Form.of(context).validate();
-                                            },
-                                          ),
-                                          const SizedBox(height: 15,),
-                                          TextFormField(
-                                            maxLines: 7,
-                                            textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
-                                              filled: true,
-                                              label: Row(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                                    child: Text(
-                                                      'الجواب',
-                                                      style: TextStyle(
-                                                        color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(24),
-                                                borderSide: BorderSide(
-                                                  color: themeNotifier.isDarkMode ? Colors.blueAccent : Colors.grey.shade300,
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(24),
-                                                borderSide: BorderSide(
-                                                  color: themeNotifier.isDarkMode ? Colors.redAccent : Colors.red,
-                                                ),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.circular(24),
-                                                borderSide: BorderSide(
-                                                  color: themeNotifier.isDarkMode ? Colors.blueAccent : Colors.grey.shade300,
-                                                ),
-                                              ),
-                                            ),
-                                            keyboardType: TextInputType.text,
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty)
-                                                return 'الرجاء ادخال الجواب ';
-                                              return null;
-                                            },
-                                            autovalidateMode: AutovalidateMode.onUserInteraction,
-                                            onChanged: (value) {
-                                              // This will trigger validation every time the field changes
-                                              Form.of(context).validate();
-                                            },
-                                          ),
-                                          const SizedBox(height: 15,),
-                                          Row(
-                                            children: [
-                                              ElevatedButton(onPressed: () {},
-                                                  child: Text('تأكيد'),
-                                                style: ElevatedButton.styleFrom(
-                                                  fixedSize: Size(80, 40),
-                                                  backgroundColor: Colors.deepPurple,
-                                                  foregroundColor: Colors.white,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10,),
-                                              ElevatedButton(onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                                child: Text('الغاء'),
-                                                style: ElevatedButton.styleFrom(
-                                                  fixedSize: Size(80, 40),
-                                                  backgroundColor: Colors.grey.shade200,
-                                                  foregroundColor: Colors.black,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-
-                                        ],
-                                      ),
-                                    ),
-                                ),
-                                ),
-                            );
-                          },
-                          child: const Text(
-                            'اضافة بطاقة',
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.blueAccent,
-                              fixedSize: Size(200, 60)),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      width: MediaQuery.of(context).size.width * 0.8 ,
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24), // Rounded corners
+                        boxShadow: [
+                          BoxShadow(
+                            color:  isDarkMode ? Colors.grey.withOpacity(0.01): Colors.grey.withOpacity(0.4), // Shadow color
+                            spreadRadius: 2, // Spread radius
+                            blurRadius: 10, // Blur radius
+                            offset: Offset(0, 5), // Offset in the x and y direction
+                          ),
+                        ],
+
+                      ),
                       child: PageView.builder(
                         controller: controller,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: cards.length,
                         onPageChanged: (index) {
                           currentIndex.value = index;
@@ -262,58 +114,108 @@ class _ScFlashCardState extends State<ScFlashCard> {
                         },
                       ),
                     ),
+
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton.icon(
-                          onPressed:
-                               () {
-                            controller.previousPage(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeInOut);
+                        ValueListenableBuilder<int>(
+                          valueListenable: currentIndex,
+                          builder: (BuildContext context, int value, Widget? child) {
+                            return ElevatedButton.icon(
+                              onPressed: value > 0
+                                  ? () {
+                                controller.previousPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut);
+                              }
+                                  : null,
+                              icon: const Icon(Icons.arrow_circle_left_rounded),
+                              label: const Text(''),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.deepPurple.shade400,
+                                  foregroundColor: Colors.white,
+                                  fixedSize: const Size(80, 40)),
+                            );
                           },
-                          icon:  Icon(Icons.arrow_circle_left_rounded),
-                          label: Text(''),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blueAccent,
-                              foregroundColor: Colors.white,
-                              fixedSize: Size(80, 40)),
                         ),
                         SizedBox(width: MediaQuery.of(context).size.width * 0.1),
                         ValueListenableBuilder<int>(
                           valueListenable: currentIndex,
                           builder: (BuildContext context, int value, Widget? child) {
-                            return Text('${value + 1} / ${cards.length}',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),);
+                            return Text(
+                              '${value + 1} / ${cards.length}',
+                              style: const TextStyle(
+                                fontSize: 22,
+                              ),
+                            );
                           },
                         ),
                         SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-                        ElevatedButton.icon(
-                          onPressed: currentIndex.value < cards.length - 1
-                              ? () {
-                            controller.nextPage(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeInOut);
-                          }
-                              : null,
-                          icon: Icon(Icons.arrow_circle_right_rounded),
-                          label: Text(''),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blueAccent,
-                              foregroundColor: Colors.white,
-                              fixedSize: Size(80, 40)),
+                        ValueListenableBuilder<int>(
+                          valueListenable: currentIndex,
+                          builder: (BuildContext context, int value, Widget? child) {
+                            return ElevatedButton.icon(
+                              onPressed: value < cards.length - 1
+                                  ? () {
+                                controller.nextPage(
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut);
+                              }
+                                  : null,
+                              icon: const Icon(Icons.arrow_circle_right_rounded),
+                              label: const Text(''),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.deepPurple.shade400,
+                                  foregroundColor: Colors.white,
+                                  fixedSize: const Size(80, 40)),
+                            );
+                          },
                         ),
                       ],
                     ),
                   ],
                 ),
-              ),
+                Positioned(
+                  bottom: 20,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ManageFlashCardsScreen(moduleName: widget.moduleName),
+                            ),
+                          ).then((_) {
+                            // Reload flash cards when returning from the manage screen
+                            setState(() {
+                              loadFlashCards(widget.moduleName).then((newCards) {
+                                cards = newCards;
+                              });
+                            });
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.deepPurple,
+                            fixedSize: const Size(200, 60)),
+                        child: const Text(
+                          'ادارة البطاقات',
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             );
           },
         ),
       ),
     );
   }
-
-
 }

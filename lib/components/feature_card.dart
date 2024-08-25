@@ -7,11 +7,11 @@ class FeatureCardComponent extends StatelessWidget {
   final VoidCallback onTap;
 
   const FeatureCardComponent({
-    Key? key,
+    super.key,
     required this.imageAsset,
     required this.title,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class FeatureCardComponent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             AspectRatio(
               aspectRatio: 16 / 10, // Adjust the aspect ratio as needed
               child: SvgPicture.asset(

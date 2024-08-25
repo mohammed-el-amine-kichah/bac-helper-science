@@ -12,7 +12,7 @@ class Subject {
 }
 
 class AverageCalculator extends StatefulWidget {
-  const AverageCalculator({Key? key}) : super(key: key);
+  const AverageCalculator({super.key});
 
   @override
   State<AverageCalculator> createState() => _AverageCalculatorState();
@@ -74,10 +74,10 @@ class _AverageCalculatorState extends State<AverageCalculator> {
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
+        title: const Text(
           'حساب المعدل',
           style: TextStyle(color: Colors.white, fontSize: 20),
           textDirection: TextDirection.rtl,
@@ -90,21 +90,21 @@ class _AverageCalculatorState extends State<AverageCalculator> {
             return Form(
               key: _formKey,
               child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Column(
                   children: [
                     ..._subjects.map((subject) => _buildSubjectField(subject)),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _calculateAndShowResult,
-                      child: Text(
-                        'حساب المعدل',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.deepPurple,
                         fixedSize: Size(MediaQuery.of(context).size.width * 0.7, 60),
+                      ),
+                      child: const Text(
+                        'حساب المعدل',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -132,7 +132,7 @@ class _AverageCalculatorState extends State<AverageCalculator> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Text(
-                  subject.optional ? subject.name + ' ' + '(اختياري)' : subject.name,
+                  subject.optional ? '${subject.name} (اختياري)' : subject.name,
                   style: TextStyle(
                     color: themeNotifier.isDarkMode ? Colors.white : Colors.black,
                     fontWeight: FontWeight.w500,
@@ -169,7 +169,7 @@ class _AverageCalculatorState extends State<AverageCalculator> {
             ),
           ),
         ),
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         validator: (value) {
           if (value == null || value.isEmpty) {
             if (!subject.optional) {
@@ -211,12 +211,12 @@ class _AverageCalculatorState extends State<AverageCalculator> {
               children: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('موافق'),
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(MediaQuery.of(context).size.width * 0.3, 30),
                     backgroundColor: Colors.deepPurple,
                     foregroundColor: Colors.white,
                   ),
+                  child: const Text('موافق'),
                 ),
               ],
             ),

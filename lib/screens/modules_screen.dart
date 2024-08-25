@@ -23,7 +23,7 @@ class ModulesScreen extends StatelessWidget {
 
     final List<Subject> subjects = [
       Subject(name: 'الرياضيات', asset: 'assets/images/lessons.svg'),
-      Subject(name: 'علوم الطبيعة والحياة', asset: 'assets/images/lessons.svg'),
+      Subject(name: 'علوم الطبيعة', asset: 'assets/images/lessons.svg'),
       Subject(name: 'العلوم الفزيائية', asset: 'assets/images/lessons.svg'),
       Subject(name: 'اللغة العربية', asset: 'assets/images/lessons.svg'),
       Subject(name: 'اللغة الفرنسية', asset: 'assets/images/lessons.svg'),
@@ -39,14 +39,14 @@ class ModulesScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: GestureDetector(
-              child: Icon(Icons.arrow_back,color: Colors.white,),
+              child: const Icon(Icons.arrow_back,color: Colors.white,),
               onTap: (){
                 Navigator.pop(context);
               }
           ),
           centerTitle: true,
           backgroundColor: Colors.deepPurple,
-          title: Text('اختر المادة',style: TextStyle(color: Colors.white,fontSize: 24),),
+          title: const Text('اختر المادة',style: TextStyle(color: Colors.white,fontSize: 24),),
         ),
         body: Container(
           width: double.infinity,

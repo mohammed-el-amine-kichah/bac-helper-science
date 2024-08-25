@@ -22,7 +22,7 @@ class AppThemes {
     primaryColor: Colors.deepPurple,
     primarySwatch: Colors.deepPurple,
 
-    iconTheme: IconThemeData(color: Colors.black),
+    iconTheme: const IconThemeData(color: Colors.black),
     textTheme: _buildTextTheme(Typography.material2021().black),
   );
 
@@ -30,7 +30,7 @@ class AppThemes {
     brightness: Brightness.dark,
     primaryColor: Colors.deepPurple,
     primarySwatch: Colors.deepPurple,
-    iconTheme: IconThemeData(color: Colors.white),
+    iconTheme: const IconThemeData(color: Colors.white),
     textTheme: _buildTextTheme(Typography.material2021().white),
   );
 }
