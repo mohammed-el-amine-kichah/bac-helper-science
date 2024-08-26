@@ -13,7 +13,10 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
   List<Question> questionList = getQuestions();
   int currentQuestionIndex = 0;
   int score = 0;
+  bool isRightAnswer = false;
   Answer? selectedAnswer;
+  Answer? correctAnswer;
+  bool isAnswered = false; // To track if the user has answered
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +26,20 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              SizedBox(height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.03),
               Text(
                 'تواريخ الوحدة الأولى',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.8,
                 child: LinearProgressIndicator(
                   borderRadius: BorderRadius.circular(15),
                   minHeight: 4,
@@ -38,15 +47,24 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                   value: (currentQuestionIndex + 1) / questionList.length,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              SizedBox(height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.1),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 2),
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.15,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.8,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color:  Colors.grey.shade300,
+                    color: Colors.grey.shade300,
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(15),
@@ -55,10 +73,17 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                 child: Text(
                   questionList[currentQuestionIndex].questionText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16,),
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+              SizedBox(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.05,
+              ),
               _answerList(),
               Spacer(),
               _nextButton(),
@@ -74,10 +99,16 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
     bool isLastQuestion = currentQuestionIndex == questionList.length - 1;
 
     return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.4,
       height: 48,
       child: ElevatedButton(
-        child: Text(isLastQuestion ? "النتيجة" : "التالي",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+        child: Text(
+          isLastQuestion ? "النتيجة" : "التالي",
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.deepPurple,
           foregroundColor: Colors.white,
@@ -86,27 +117,48 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
           if (selectedAnswer == null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('يرجى اختيار اجابة',textAlign: TextAlign.center,style: TextStyle(fontSize: 24),),
-                duration: Duration(seconds: 1,milliseconds: 500), // Duration for which the SnackBar is displayed
-                behavior: SnackBarBehavior.floating, // Ensures the SnackBar stays at the bottom
-                backgroundColor: Colors.redAccent, // Customize the background color
+                content: Text(
+                  'يرجى اختيار اجابة',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24),
+                ),
+                duration: Duration(seconds: 1, milliseconds: 500),
+                // Duration for which the SnackBar is displayed
+                behavior: SnackBarBehavior.floating,
+                // Ensures the SnackBar stays at the bottom
+                backgroundColor: Colors
+                    .redAccent, // Customize the background color
               ),
             );
           } else {
-            if (isLastQuestion) {
-              if (selectedAnswer!.isCorrect) {
-                score++;
-              }
-              showDialog(context: context, builder: (_) => _showScoreDialog());
-            } else {
-              setState(() {
-                if (selectedAnswer!.isCorrect) {
-                  score++;
-                }
-                selectedAnswer = null;
-                currentQuestionIndex++;
-              });
+            // Mark that the question has been answered
+            isAnswered = true;
+
+            // Highlight correct and incorrect answers
+            setState(() {
+              correctAnswer = questionList[currentQuestionIndex]
+                  .answersList
+                  .firstWhere((answer) => answer.isCorrect);
+            });
+
+            if (selectedAnswer!.isCorrect) {
+              score++;
             }
+
+            // Delay moving to the next question
+            Future.delayed(Duration(milliseconds: 500), () {
+              if (isLastQuestion) {
+                showDialog(
+                    context: context, builder: (_) => _showScoreDialog());
+              } else {
+                setState(() {
+                  isRightAnswer = false;
+                  isAnswered = false;
+                  selectedAnswer = null;
+                  currentQuestionIndex++;
+                });
+              }
+            });
           }
         },
       ),
@@ -123,41 +175,44 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
       _ => "خطأ فني بسيط"
     };
     return AlertDialog(
-      title: Text(
-        " نتيجتك هي : $score / 10 ",
-        textAlign : TextAlign.end,
-        style: TextStyle(fontSize: 18),
-      ),
-      content:
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('$remark',
-                textAlign: TextAlign.end,
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    child: const Text("العودة"),
-                    style: ElevatedButton.styleFrom(
-                     backgroundColor: Colors.deepPurple,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const QuizSelectionScreen()));
-
-                    },
+        title: Text(
+          " نتيجتك هي : $score / 10 ",
+          textAlign: TextAlign.end,
+          style: TextStyle(fontSize: 18),
+        ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$remark',
+              textAlign: TextAlign.end,
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ElevatedButton(
+                  child: const Text("العودة"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
                   ),
-                ],
-              ),
-            ],
-          )
-
-    );
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                            const QuizSelectionScreen()));
+                  },
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 
   Widget _answerList() {
@@ -168,24 +223,49 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
           .toList(),
     );
   }
-
   Widget _answerButton(Answer answer) {
     bool isSelected = answer == selectedAnswer;
+    Color buttonColor = Colors.white; // Default button color
+    Color textColor = Colors.black;   // Default text color
+    Color borderColor = Colors.grey.shade300; // Default border color
+
+    if (isAnswered) {
+      if (answer.isCorrect) {
+        buttonColor = Colors.green;  // Correct answers will be green
+        textColor = Colors.white;    // Text color for correct answers
+        borderColor = Colors.green;  // Correct answer border color
+      } else if (isSelected && !answer.isCorrect) {
+        buttonColor = Colors.red;    // Incorrect selected answers will be red
+        textColor = Colors.white;    // Text color for incorrect selected answers
+        borderColor = Colors.red;    // Incorrect answer border color
+      } else {
+        buttonColor = Colors.white;  // Other answers remain white
+        textColor = Colors.black;    // Text remains black for unselected answers
+        borderColor = Colors.grey.shade300; // Unselected answers' border
+      }
+    } else if (isSelected) {
+      buttonColor = Colors.deepPurple;  // Selected but not yet confirmed
+      textColor = Colors.white;         // Text color when selected
+      borderColor = Colors.deepPurple;  // Border color for selected answer
+    }
+
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selectedAnswer = answer;
-        });
+        if (!isAnswered) {
+          setState(() {
+            selectedAnswer = answer;
+          });
+        }
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.deepPurple : Colors.white,
+          color: buttonColor,
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: isSelected ? Colors.deepPurple : Colors.grey.shade300,
+            color: borderColor, // Updated to reflect dynamic border color
             width: 1,
           ),
         ),
@@ -194,10 +274,11 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
           answer.answerText,
           style: TextStyle(
             fontSize: 18,
-            color: isSelected ? Colors.white : Colors.black,
+            color: textColor, // Ensure text color is set based on the conditions
           ),
         ),
       ),
     );
   }
+
 }
