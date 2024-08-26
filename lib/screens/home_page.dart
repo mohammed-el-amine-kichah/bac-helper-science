@@ -2,6 +2,7 @@
 
 import 'package:bac_helper_sc/components/feature_card.dart';
 import 'package:bac_helper_sc/screens/modules_screen.dart';
+import 'package:bac_helper_sc/screens/quiz_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -147,6 +148,7 @@ class HomePage extends StatelessWidget {
                          imageAsset:  'assets/images/quiz.svg',
                          title: 'اختبر معلوماتك',
                          onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => const QuizSelectionScreen()));
 
                          }
                      ),

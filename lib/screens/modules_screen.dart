@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../components/feature_card.dart';
 import '../flashCards/sc_flash_card.dart';
 import '../models/content_type.dart';
-import '../provider/dark_mode.dart';
 
 class Subject {
   final String name;
@@ -19,7 +17,7 @@ class ModulesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
+
 
     final List<Subject> subjects = [
       Subject(name: 'الرياضيات', asset: 'assets/images/lessons.svg'),

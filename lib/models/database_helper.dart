@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -23,6 +26,7 @@ class DatabaseHelper {
   }
 
   Future _createDB(Database db, int version) async {
+    // user added flash card
     await db.execute('''
       CREATE TABLE flashcards(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,6 +36,41 @@ class DatabaseHelper {
         user_added INTEGER NOT NULL DEFAULT 1
       )
     ''');
+
+    // Create Quizzes table
+    await db.execute('''
+    CREATE TABLE quizzes (
+      id INTEGER PRIMARY KEY,
+      unit INTEGER,
+      quiz_type TEXT,
+      question TEXT,
+      correct_answer TEXT,
+      answer2 TEXT,
+      answer3 TEXT,
+      answer4 TEXT
+    )
+  ''');
+
+    // populate the quizzes table from josn file
+    await _populateQuizzes(db);
+
+  }
+  // fetching data from json
+  Future _populateQuizzes(Database db) async {
+    final String response = await rootBundle.loadString('assets/data/quiz.json');
+    final List<dynamic> data = json.decode(response);
+
+    for (var quiz in data) {
+      await db.insert('quizzes', {
+        'quiz_type': quiz['quiz_type'],
+        'unit' : quiz['unit'],
+        'question': quiz['question'],
+        'correct_answer': quiz['correct_answer'],
+        'answer2': quiz['answer2'],
+        'answer3': quiz['answer3'],
+        'answer4': quiz['answer4']
+      });
+    }
   }
 
   // Insert a user-added flashcard into the database
