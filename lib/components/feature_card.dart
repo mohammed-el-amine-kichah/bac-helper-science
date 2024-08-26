@@ -26,7 +26,7 @@ class FeatureCardComponent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 15,),
+            const SizedBox(height: 10,),
             AspectRatio(
               aspectRatio: 16 / 10, // Adjust the aspect ratio as needed
               child: SvgPicture.asset(
@@ -35,13 +35,13 @@ class FeatureCardComponent extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
                 title,
                 textAlign: TextAlign.center,
                 textDirection: TextDirection.rtl,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: 16, // Adjust font size if needed
+                  fontSize: 14, // Adjust font size if needed
                   color: isDarkMode ? Colors.white : Colors.black, // Change text color based on theme
                 ),
               ),

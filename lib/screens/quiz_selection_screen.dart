@@ -1,4 +1,5 @@
 import 'package:bac_helper_sc/components/feature_card.dart';
+import 'package:bac_helper_sc/screens/quiz_game_screen.dart';
 import 'package:flutter/material.dart';
 
 class Quiz {
@@ -52,6 +53,7 @@ class QuizSelectionScreen extends StatelessWidget {
                               imageAsset: quiz.asset,
                               title: quiz.type,
                               onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => QuizGameScreen()));
 
                               })
 

@@ -141,6 +141,7 @@ class _AverageCalculatorState extends State<AverageCalculator> {
               ),
             ],
           ),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
           helperText: 'المعامل: ${subject.weight}',
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(24),

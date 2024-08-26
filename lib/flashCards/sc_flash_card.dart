@@ -131,6 +131,7 @@ class _ScFlashCardState extends State<ScFlashCard> {
                               }
                                   : null,
                               icon: const Icon(Icons.arrow_circle_left_rounded),
+                              iconAlignment: IconAlignment.end,
                               label: const Text(''),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.deepPurple.shade400,
@@ -164,6 +165,7 @@ class _ScFlashCardState extends State<ScFlashCard> {
                               }
                                   : null,
                               icon: const Icon(Icons.arrow_circle_right_rounded),
+                              iconAlignment: IconAlignment.end,
                               label: const Text(''),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.deepPurple.shade400,
