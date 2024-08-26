@@ -1,0 +1,120 @@
+[
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "تأسيس هيأة الأمم المتحدة",
+    "correct_answer": "1945/10/24",
+    "answer2": "ماي 1972",
+    "answer3": "1946/11/02",
+    "answer4": "1947/02/15"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "مشروع مارشال",
+    "correct_answer": "1947/06/05",
+    "answer2": "1991/07/01",
+    "answer3": "1946/03/02",
+    "answer4": "1947/04/05"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "تأسيس الكومنفورم",
+    "correct_answer": "1947/10/06",
+    "answer2": "1947/09/22",
+    "answer3": "1945/01/02",
+    "answer4": "1947/07/21"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "الخط الأحمر بين موسكو و واشنطن",
+    "correct_answer": "1963/06/20",
+    "answer2": "1959/04/04",
+    "answer3": "1966/03/02",
+    "answer4": "1962/02/15"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "قمة حركة عدم الانحياز في الجزائر ",
+    "correct_answer": "05/09/1973",
+    "answer2": "1972/05/14",
+    "answer3": "1971/11/02",
+    "answer4": "1976/09/09"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "حل الكوميكون",
+    "correct_answer": "1991/06/28",
+    "answer2": "1991/07/01",
+    "answer3": "1989/03/19",
+    "answer4": "1991/02/25"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "قنبلة الو.م.أ في هيروشيما",
+    "correct_answer": "1945/08/06",
+    "answer2": "1945/08/09",
+    "answer3": "1946/12/06",
+    "answer4": "1945/02/18"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "زوال الاتحاد السوفييتي",
+    "correct_answer": "1991/12/25",
+    "answer2": "1991/07/01",
+    "answer3": "1987/09/22",
+    "answer4": "1990/12/15"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "تصفية حلف وارسو",
+    "correct_answer": "1991/07/01",
+    "answer2": "1990/12/15",
+    "answer3": "1977/11/02",
+    "answer4": "1989/02/15"
+  },
+  {
+    "quiz_type": "Dates",
+    "unit": "1",
+    "question": "قنبلة الو.م.أ في ناكازاكي",
+    "correct_answer": "1945/08/09",
+    "answer2": "1966/02/11",
+    "answer3": "1945/01/02",
+    "answer4": "1937/11/15"
+  },
+
+  {
+    "quiz_type": "Personalities",
+    "unit": "1",
+    "question": "When was Flutter first released?",
+    "correct_answer": "2017",
+    "answer2": "2015",
+    "answer3": "2018",
+    "answer4": "2016"
+  },
+  {
+    "quiz_type": "historyDefinitions",
+    "unit": "1",
+    "question": "When was Flutter first released?",
+    "correct_answer": "2017",
+    "answer2": "2015",
+    "answer3": "2018",
+    "answer4": "2016"
+  },
+  {
+    "quiz_type": "geographyDefinitions",
+    "unit": "1",
+    "question": "What is Flutter?",
+    "correct_answer": "A UI toolkit for building natively compiled applications",
+    "answer2": "A database management system",
+    "answer3": "An operating system",
+    "answer4": "A type of cloud service"
+  }
+]
