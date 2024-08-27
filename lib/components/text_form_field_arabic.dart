@@ -1,3 +1,4 @@
+
 import 'package:bac_helper_sc/provider/dark_mode.dart';
 import 'package:flutter/material.dart';
 
@@ -49,41 +50,23 @@ class ArabicFormField extends StatelessWidget {
           ],
         ),
 
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide(
-            color: themeNotifier.isDarkMode ? Colors.blueAccent : Colors.grey.shade300,
-            width: 2,
-          ),
-        ),
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide(
-            color: themeNotifier.isDarkMode ? Colors.blueAccent : Colors.grey.shade300,
-            width: 2,
-          ),
+
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
           borderSide: BorderSide(
-            color: themeNotifier.isDarkMode ? Colors.redAccent : Colors.red,
+            color: themeNotifier.isDarkMode ? Colors.red.shade300 : Colors.red,
           ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide(
-            color: themeNotifier.isDarkMode ? Colors.blueAccent : Colors.grey.shade300,
-          ),
-        ),
+
       ),
       keyboardType: keyboardType,
       validator: validator,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      onChanged: (value) {
-        // This will trigger validation every time the field changes
-        Form.of(context).validate();
-      },
-    );
+
+      );
 
   }
 }

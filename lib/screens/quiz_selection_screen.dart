@@ -54,7 +54,7 @@ class QuizSelectionScreen extends StatelessWidget {
           ),
           body: Container(
             width: double.infinity,
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -69,7 +69,7 @@ class QuizSelectionScreen extends StatelessWidget {
                               imageAsset: quiz.asset,
                               title: quiz.type,
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => QuizGameScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const QuizGameScreen()));
 
                               })
 

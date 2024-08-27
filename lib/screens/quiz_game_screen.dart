@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:bac_helper_sc/provider/dark_mode.dart';
 import 'package:bac_helper_sc/screens/quiz_selection_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import '../models/fetch_quiz_questions.dart';
 import 'home_page.dart'; // Ensure this is the only import for Question
 
@@ -11,22 +16,36 @@ class QuizGameScreen extends StatefulWidget {
 }
 
 class _QuizGameScreenState extends State<QuizGameScreen> {
-  List<Question> questionList = getQuestions();
+ List<Question> questionList = getQuestions();
   int currentQuestionIndex = 0;
   int score = 0;
   bool isRightAnswer = false;
   Answer? selectedAnswer;
   Answer? correctAnswer;
   bool isAnswered = false; // To track if the user has answered
+ bool showErrorMessage = false;
 
+ void _showErrorMessage() {
+   setState(() {
+     showErrorMessage = true; // Show the success message container
+   });
+
+   // Hide the container after 1 second
+   Timer(const Duration(milliseconds: 2700), () {
+     setState(() {
+       showErrorMessage = false; // Hide the success message container
+     });
+   });
+ }
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeNotifier>(context).isDarkMode;
     return PopScope(
         canPop: false,
         onPopInvokedWithResult: (bool didPop, dynamic result) async {
           if (didPop) return;
 
-          final shouldPop = await _showExitConfirmationDialog();
+          final shouldPop = await _showExitConfirmationDialog(isDarkMode);
 
           if (shouldPop) {
             Navigator.of(context).pushAndRemoveUntil(
@@ -47,7 +66,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                   .of(context)
                   .size
                   .height * 0.03),
-              Text(
+              const Text(
                 'تواريخ الوحدة الأولى',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
@@ -58,9 +77,10 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                     .size
                     .width * 0.8,
                 child: LinearProgressIndicator(
+                  color: isDarkMode ? Colors.deepPurple.shade400 : Colors.deepPurple.shade300,
                   borderRadius: BorderRadius.circular(15),
                   minHeight: 4,
-                  backgroundColor: Colors.grey.shade200,
+                  backgroundColor: isDarkMode? Colors.grey.shade400 : Colors.grey.shade200 ,
                   value: (currentQuestionIndex + 1) / questionList.length,
                 ),
               ),
@@ -69,7 +89,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                   .size
                   .height * 0.1),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 2),
                 height: MediaQuery
                     .of(context)
                     .size
@@ -81,16 +101,16 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.grey.shade300,
+                    color: isDarkMode ? Colors.grey : Colors.grey.shade300,
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.white,
+                  color: isDarkMode ? const Color(0xFF484848): Colors.white,
                 ),
                 child: Text(
                   questionList[currentQuestionIndex].questionText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
@@ -101,10 +121,59 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                     .size
                     .height * 0.05,
               ),
-              _answerList(),
-              Spacer(),
-              _nextButton(),
-              SizedBox(height: 20), // Adds 20px space from the bottom
+              _answerList(isDarkMode),
+              const Spacer(),
+                  if (showErrorMessage)
+                    Center(
+                      child: Container(
+                          height: 60,
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color(0xFFDFC4C4),
+                              width: 1,
+                            ),
+                            color: const Color(0xFFF4D5D5),
+                            borderRadius: BorderRadius.circular(24),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1), // Shadow color
+                                spreadRadius: 2, // How much the shadow spreads
+                                blurRadius: 10, // How blurred the shadow is
+                                offset: const Offset(0, 4), // Shadow position (x, y)
+                              ),
+                            ],
+                          ),
+
+                          child:
+                          Row(
+                            children: [
+                              Image.asset('assets/images/fail_icon.png'),
+                              const Spacer(),
+                              const Text(
+                                'يرجي اختيار اجابة',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  color: Color(0xFFD71A1A),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          )
+
+                      ). animate()
+                          .shimmer(delay : 200.ms, duration: 1800.ms)
+                          .shake(hz:3, curve: Curves.easeInOutCubic)
+                          .scaleXY(end: 1.1, duration: 600.ms)
+                          .then(delay: 600.ms)
+                          .scaleXY(end: 1/1.1),
+                    ),
+                  if(!showErrorMessage)
+                    _nextButton(),
+                  const SizedBox(height: 20,),
+
+
             ],
           ),
         ),
@@ -116,38 +185,20 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
   Widget _nextButton() {
     bool isLastQuestion = currentQuestionIndex == questionList.length - 1;
 
-    return Container(
+    return SizedBox(
       width: MediaQuery
           .of(context)
           .size
           .width * 0.4,
       height: 48,
       child: ElevatedButton(
-        child: Text(
-          isLastQuestion ? "النتيجة" : "التالي",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.deepPurple,
           foregroundColor: Colors.white,
         ),
         onPressed: () {
           if (selectedAnswer == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'يرجى اختيار اجابة',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 24),
-                ),
-                duration: Duration(seconds: 1, milliseconds: 500),
-                // Duration for which the SnackBar is displayed
-                behavior: SnackBarBehavior.floating,
-                // Ensures the SnackBar stays at the bottom
-                backgroundColor: Colors
-                    .redAccent, // Customize the background color
-              ),
-            );
+           _showErrorMessage();
           } else {
             // Mark that the question has been answered
             isAnswered = true;
@@ -164,7 +215,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
             }
 
             // Delay moving to the next question
-            Future.delayed(Duration(milliseconds: 500), () {
+            Future.delayed(const Duration(milliseconds: 500), () {
               if (isLastQuestion) {
                 showDialog(
                     context: context, builder: (_) => _showScoreDialog());
@@ -179,6 +230,10 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
             });
           }
         },
+        child: Text(
+          isLastQuestion ? "النتيجة" : "التالي",
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
@@ -196,16 +251,16 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
         title: Text(
           " نتيجتك هي : $score / 10 ",
           textAlign: TextAlign.end,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '$remark',
+              remark,
               textAlign: TextAlign.end,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(
               height: 10,
@@ -214,7 +269,6 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ElevatedButton(
-                  child: const Text("العودة"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                     foregroundColor: Colors.white,
@@ -226,6 +280,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                             builder: (context) =>
                             const QuizSelectionScreen()));
                   },
+                  child: const Text("العودة"),
                 ),
               ],
             ),
@@ -233,40 +288,61 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
         ));
   }
 
-  Widget _answerList() {
+  Widget _answerList(bool dark) {
     return Column(
       children: questionList[currentQuestionIndex]
           .answersList
-          .map((e) => _answerButton(e))
+          .map((e) => _answerButton(e,dark))
           .toList(),
     );
   }
-  Future<bool> _showExitConfirmationDialog() async {
+  Future<bool> _showExitConfirmationDialog(bool dark) async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('هل تريد الخروج من الاختبار؟'),
-          content: Text('نتيجتك الحالية: $score / ${currentQuestionIndex + 1}'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('استمرار'),
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-            TextButton(
-              child: Text('العودة للصفحة الرئيسية'),
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-          ],
+          title: const Text('هل تريد الخروج من الاختبار؟',textAlign: TextAlign.end,style: TextStyle(fontSize: 19),),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('نتيجتك الحالية : $score / ${currentQuestionIndex + 1}',textAlign: TextAlign.end),
+              const SizedBox(height: 15,),
+              Row(
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.deepPurple,
+                    ),
+                    child: const Text('استمرار'),
+                    onPressed: () => Navigator.of(context).pop(false),
+                  ),
+                  const SizedBox(width: 15,),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: dark ? Colors.white: Colors.black,
+                      backgroundColor: dark? Colors.grey :  Colors.grey.shade200 ,
+                    ),
+                    child: const Text('الخروج'),
+                    onPressed: () => Navigator.of(context).pop(true),
+                  ),
+                ],
+              ),
+
+            ],
+          )
+
+
         );
       },
     ) ?? false; // If the dialog is dismissed, default to false
   }
-  Widget _answerButton(Answer answer) {
+  Widget _answerButton(Answer answer , bool dark) {
     bool isSelected = answer == selectedAnswer;
-    Color buttonColor = Colors.white; // Default button color
-    Color textColor = Colors.black;   // Default text color
-    Color borderColor = Colors.grey.shade300; // Default border color
+    Color buttonColor = dark? const Color(0xFF484848):Colors.white ; // Default button color
+    Color textColor = dark? Colors.white :Colors.black;   // Default text color
+    Color borderColor = dark ? Colors.grey : Colors.grey.shade300; // Default border color
 
     if (isAnswered) {
       if (answer.isCorrect) {
@@ -278,8 +354,6 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
         textColor = Colors.white;    // Text color for incorrect selected answers
         borderColor = Colors.red;    // Incorrect answer border color
       } else {
-        buttonColor = Colors.white;  // Other answers remain white
-        textColor = Colors.black;    // Text remains black for unselected answers
         borderColor = Colors.grey.shade300; // Unselected answers' border
       }
     } else if (isSelected) {

@@ -148,14 +148,14 @@ class _TimerScreenState extends State<TimerScreen> {
                       'عدد الساعات المتبقية: $hours\n'
                       'عدد الدقائق المتبقية  : $minutes\n'
                       'عدد الثـواني الـمتبقية  : $seconds',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                   textAlign: TextAlign.right,
                 ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
               if (_isTimerRunning)
                 Text(
                   'تاريخ البكالوريا هو: $formattedDate',
-                  style: const TextStyle(fontSize: 20,fontWeight:FontWeight.w500 ),
+                  style: const TextStyle(fontSize: 20,fontWeight:FontWeight.w300 ),
 
 
                   textAlign: TextAlign.right,

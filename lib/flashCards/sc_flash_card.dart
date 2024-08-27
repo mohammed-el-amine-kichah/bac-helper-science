@@ -93,7 +93,7 @@ class _ScFlashCardState extends State<ScFlashCard> {
                             color:  isDarkMode ? Colors.grey.withOpacity(0.01): Colors.grey.withOpacity(0.4), // Shadow color
                             spreadRadius: 2, // Spread radius
                             blurRadius: 10, // Blur radius
-                            offset: Offset(0, 5), // Offset in the x and y direction
+                            offset: const Offset(0, 5), // Offset in the x and y direction
                           ),
                         ],
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bac_helper_sc/provider/dark_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../components/flash_card.dart';
 import '../components/text_form_field_arabic.dart';
 import '../models/database_helper.dart';
@@ -43,7 +44,7 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
     });
 
     // Hide the container after 1 second
-    Timer(const Duration(seconds: 1), () {
+    Timer(const Duration(milliseconds: 2700), () {
       setState(() {
         showSuccessMessage = false; // Hide the success message container
       });
@@ -93,7 +94,7 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
 
     // Scroll to the form when editing is started
     _scrollController.animateTo(
-      _scrollController.position.pixels,
+      _scrollController.position.minScrollExtent,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
@@ -101,6 +102,11 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
 
   Future<void> _deleteCard(int id) async {
     await DatabaseHelper.instance.deleteFlashCard(id);
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
     _showSuccessMessage();
     await _loadCards();
   }
@@ -139,26 +145,27 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color(0xFFC7DFC4),
+                          color: const Color(0xFFC7DFC4),
                           width: 1,
                         ),
-                        color: Color(0xFFE2F5E1),
+                        color: const Color(0xFFE2F5E1),
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.1), // Shadow color
                             spreadRadius: 2, // How much the shadow spreads
                             blurRadius: 10, // How blurred the shadow is
-                            offset: Offset(0, 4), // Shadow position (x, y)
+                            offset: const Offset(0, 4), // Shadow position (x, y)
                           ),
                         ],
                       ),
-                      child:
+
+              child:
                           Row(
                             children: [
                               Image.asset('assets/images/success_icon.png'),
-                              Spacer(),
-                              Text(
+                              const Spacer(),
+                              const Text(
                                 'تمت العملية بنجاح',
                                 textAlign: TextAlign.end,
                                 style: TextStyle(
@@ -169,7 +176,12 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
                             ],
                           )
 
-                    ),
+                    ). animate()
+                        .shimmer(delay : 200.ms, duration: 1800.ms)
+                        .shake(hz:3, curve: Curves.easeInOutCubic)
+                        .scaleXY(end: 1.1, duration: 600.ms)
+                        .then(delay: 600.ms)
+                        .scaleXY(end: 1/1.1),
                   ),
                   const SizedBox(height: 20,),
 
@@ -216,6 +228,8 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
                 const SizedBox(height: 32),
                 const Text('البطاقات الحالية',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 16),
+
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
