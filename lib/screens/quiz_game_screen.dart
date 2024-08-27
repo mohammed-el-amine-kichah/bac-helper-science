@@ -1,6 +1,7 @@
 import 'package:bac_helper_sc/screens/quiz_selection_screen.dart';
 import 'package:flutter/material.dart';
-import '../models/fetch_quiz_questions.dart'; // Ensure this is the only import for Question
+import '../models/fetch_quiz_questions.dart';
+import 'home_page.dart'; // Ensure this is the only import for Question
 
 class QuizGameScreen extends StatefulWidget {
   const QuizGameScreen({super.key});
@@ -20,7 +21,23 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, dynamic result) async {
+          if (didPop) return;
+
+          final shouldPop = await _showExitConfirmationDialog();
+
+          if (shouldPop) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const HomePage()),
+                  (route) => false,
+            );
+          }
+
+        },
+
+   child:  SafeArea(
       child: Scaffold(
         body: Center(
           child: Column(
@@ -92,6 +109,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
           ),
         ),
       ),
+   )
     );
   }
 
@@ -202,7 +220,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
@@ -222,6 +240,27 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
           .map((e) => _answerButton(e))
           .toList(),
     );
+  }
+  Future<bool> _showExitConfirmationDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('هل تريد الخروج من الاختبار؟'),
+          content: Text('نتيجتك الحالية: $score / ${currentQuestionIndex + 1}'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('استمرار'),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+            TextButton(
+              child: Text('العودة للصفحة الرئيسية'),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+          ],
+        );
+      },
+    ) ?? false; // If the dialog is dismissed, default to false
   }
   Widget _answerButton(Answer answer) {
     bool isSelected = answer == selectedAnswer;

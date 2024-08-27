@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bac_helper_sc/provider/dark_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,7 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
   final _formKey = GlobalKey<FormState>();
   final ScrollController _scrollController = ScrollController(); // To control scrolling
   List<FlashCard> cards = [];
+  bool showSuccessMessage = false;
   FlashCard? _editingCard;// Track which card is being edited
 
   @override
@@ -32,6 +35,18 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
     final loadedCards = await DatabaseHelper.instance.getUserAddedFlashCards(widget.moduleName);
     setState(() {
       cards = loadedCards;
+    });
+  }
+  void _showSuccessMessage() {
+    setState(() {
+      showSuccessMessage = true; // Show the success message container
+    });
+
+    // Hide the container after 1 second
+    Timer(const Duration(seconds: 1), () {
+      setState(() {
+        showSuccessMessage = false; // Hide the success message container
+      });
     });
   }
 
@@ -48,6 +63,7 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
           _questionController.text,
           _answerController.text,
         );
+        _showSuccessMessage();
         setState(() {
           _editingCard = null; // Reset editing card
         });
@@ -59,7 +75,7 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
           answer: _answerController.text,
         );
         await DatabaseHelper.instance.insertFlashCard(newCard, widget.moduleName);
-
+        _showSuccessMessage();
         // Clear the controllers
         _questionController.clear();
         _answerController.clear();
@@ -77,7 +93,7 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
 
     // Scroll to the form when editing is started
     _scrollController.animateTo(
-      _scrollController.position.minScrollExtent,
+      _scrollController.position.pixels,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
@@ -85,6 +101,7 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
 
   Future<void> _deleteCard(int id) async {
     await DatabaseHelper.instance.deleteFlashCard(id);
+    _showSuccessMessage();
     await _loadCards();
   }
 
@@ -114,6 +131,48 @@ class _ManageFlashCardsScreenState extends State<ManageFlashCardsScreen> {
             key: _formKey,
             child: Column(
               children: [
+                if (showSuccessMessage)
+                  Center(
+                    child: Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xFFC7DFC4),
+                          width: 1,
+                        ),
+                        color: Color(0xFFE2F5E1),
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1), // Shadow color
+                            spreadRadius: 2, // How much the shadow spreads
+                            blurRadius: 10, // How blurred the shadow is
+                            offset: Offset(0, 4), // Shadow position (x, y)
+                          ),
+                        ],
+                      ),
+                      child:
+                          Row(
+                            children: [
+                              Image.asset('assets/images/success_icon.png'),
+                              Spacer(),
+                              Text(
+                                'تمت العملية بنجاح',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  color: Color(0xFF407C3D),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          )
+
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+
                 ArabicFormField(
                   minLines: 2,
                   maxLines: 5,

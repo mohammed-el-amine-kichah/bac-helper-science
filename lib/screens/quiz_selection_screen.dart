@@ -2,6 +2,8 @@ import 'package:bac_helper_sc/components/feature_card.dart';
 import 'package:bac_helper_sc/screens/quiz_game_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'home_page.dart';
+
 class Quiz {
   final String type;
   final String asset;
@@ -21,15 +23,29 @@ class QuizSelectionScreen extends StatelessWidget {
       Quiz(type: 'مصطلحات التاريخ', asset: 'assets/images/lessons.svg'),
 
     ];
+    return PopScope(
+      canPop: false, // Set this to false to handle the back button press ourselves
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) return;
+        // Navigate to HomePage when the back button is pressed
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const HomePage()),
+              (route) => false, // This removes all previous routes
+        );
+
+      },
 
 
-    return SafeArea(
+    child:  SafeArea(
         child: Scaffold(
           appBar: AppBar(
             leading: GestureDetector(
                 child: const Icon(Icons.arrow_back,color: Colors.white,),
                 onTap: (){
-                  Navigator.pop(context);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                        (route) => false, // This removes all previous routes
+                  );
                 }
             ),
             centerTitle: true,
@@ -67,6 +83,8 @@ class QuizSelectionScreen extends StatelessWidget {
             ),
 
           ),
-        ));
+        )
+    )
+    );
   }
 }
