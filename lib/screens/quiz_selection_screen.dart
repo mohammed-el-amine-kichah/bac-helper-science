@@ -1,6 +1,8 @@
 import 'package:bac_helper_sc/components/feature_card.dart';
+import 'package:bac_helper_sc/provider/dark_mode.dart';
 import 'package:bac_helper_sc/screens/quiz_game_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'home_page.dart';
 
@@ -8,14 +10,114 @@ class Quiz {
   final String type;
   final String asset;
 
+
   Quiz({required this.type, required this.asset});
 }
 
 class QuizSelectionScreen extends StatelessWidget {
   const QuizSelectionScreen({super.key});
+  void _showUnitSelectionDialog(bool isDarkMode,BuildContext context, String quizType) {
+
+    showDialog(context: context,
+        builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('اختر الوحدة', textAlign: TextAlign.center,),
+               content:
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                     GestureDetector(
+                       child:Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color:  isDarkMode ? const Color(0xFF484848) : Colors.white ,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: isDarkMode ? Colors.grey : Colors.grey.shade300 , // Updated to reflect dynamic border color
+                      width: 1,
+                    ),
+                  ),
+                  child: const Text(
+                    textAlign: TextAlign.center,
+                    'الوحدة الأولى',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                                ),
+                       onTap: (){
+                         Navigator.of(context).pop(); // Close the dialog
+                         Navigator.push(context, MaterialPageRoute(builder: (context) =>  QuizGameScreen(quizType: quizType, s:'الوحدة الأولى',)));
+                       },
+                     ),
+                      GestureDetector(
+                        child:Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color:  isDarkMode ? const Color(0xFF484848) : Colors.white ,
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: isDarkMode ? Colors.grey : Colors.grey.shade300 , // Updated to reflect dynamic border color
+                              width: 1,
+                            ),
+                          ),
+                          child: const Text(
+                            textAlign: TextAlign.center,
+                            'الوحدة الثانية',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        onTap: (){
+                          Navigator.of(context).pop(); // Close the dialog
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  QuizGameScreen(quizType: quizType, s: 'الوحدة الثانية', )));
+                        },
+                      ),
+                      GestureDetector(
+                        child:Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color:  isDarkMode ? const Color(0xFF484848) : Colors.white ,
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: isDarkMode ? Colors.grey : Colors.grey.shade300 , // Updated to reflect dynamic border color
+                              width: 1,
+                            ),
+                          ),
+                          child: const Text(
+                            textAlign: TextAlign.center,
+                            'الوحدة الثالثة',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        onTap: (){
+                          Navigator.of(context).pop(); // Close the dialog
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  QuizGameScreen(quizType: quizType,s: 'الوحدة الثالثة',)));
+                        },
+                      ),
+
+                    ],
+
+                ),
+              );
+        }
+    );
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeNotifier>(context).isDarkMode;
     final List<Quiz> quizzes = [
       Quiz(type: 'تواريخ', asset: 'assets/images/lessons.svg'),
       Quiz(type: 'شخصيات', asset: 'assets/images/lessons.svg'),
@@ -69,8 +171,7 @@ class QuizSelectionScreen extends StatelessWidget {
                               imageAsset: quiz.asset,
                               title: quiz.type,
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const QuizGameScreen()));
-
+                                _showUnitSelectionDialog(isDarkMode,context, quiz.type);
                               })
 
                       ).toList(

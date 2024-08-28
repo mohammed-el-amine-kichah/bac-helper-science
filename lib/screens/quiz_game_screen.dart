@@ -6,17 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../models/fetch_quiz_questions.dart';
-import 'home_page.dart'; // Ensure this is the only import for Question
+
 
 class QuizGameScreen extends StatefulWidget {
-  const QuizGameScreen({super.key});
+  final String quizType;
+  final String s;
+  QuizGameScreen({required this.quizType,required this.s, super.key});
 
   @override
   State<QuizGameScreen> createState() => _QuizGameScreenState();
 }
 
 class _QuizGameScreenState extends State<QuizGameScreen> {
- List<Question> questionList = getQuestions();
+ List<Question> questionList = [];
   int currentQuestionIndex = 0;
   int score = 0;
   bool isRightAnswer = false;
@@ -24,6 +26,13 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
   Answer? correctAnswer;
   bool isAnswered = false; // To track if the user has answered
  bool showErrorMessage = false;
+ @override
+ void initState() {
+   super.initState();
+
+   // Initialize questionList here
+   questionList = getQuizQuestions(widget.quizType, widget.s);
+ }
 
  void _showErrorMessage() {
    setState(() {
@@ -49,7 +58,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
 
           if (shouldPop) {
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => const QuizSelectionScreen()),
                   (route) => false,
             );
           }
@@ -66,9 +75,9 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                   .of(context)
                   .size
                   .height * 0.03),
-              const Text(
-                'تواريخ الوحدة الأولى',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+               Text(
+                widget.quizType + ' ' + widget.s,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               SizedBox(

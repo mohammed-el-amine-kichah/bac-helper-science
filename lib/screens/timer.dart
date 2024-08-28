@@ -136,8 +136,8 @@ class _TimerScreenState extends State<TimerScreen> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
 
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.5,
+                height:300,
+                width: 250,
                 child: SvgPicture.asset('assets/images/timer.svg', fit: BoxFit.cover,),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.10,),

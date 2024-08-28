@@ -99,13 +99,13 @@ Widget buildBackFace(BuildContext context, String answer) {
   return Container(
     decoration: BoxDecoration(
 
-      color: themeNotifier.isDarkMode ? Colors.black54: Colors.grey.shade200,
+      color: themeNotifier.isDarkMode ?Colors.grey.withOpacity(0.03): Colors.grey.shade200,
       borderRadius: BorderRadius.circular(24),
     ),
     child: Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Text(answer,style: const TextStyle(fontSize: 18),textAlign: TextAlign.center,),
+        child: Text(answer,style: const TextStyle(fontSize: 20),textAlign: TextAlign.center,),
       ),
     ),
   );
