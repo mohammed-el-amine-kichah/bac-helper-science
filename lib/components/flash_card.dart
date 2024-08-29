@@ -105,7 +105,7 @@ Widget buildBackFace(BuildContext context, String answer) {
     child: Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Text(answer,style: const TextStyle(fontSize: 20),textAlign: TextAlign.center,),
+        child: Text(answer,style: const TextStyle(fontSize: 20),textAlign: TextAlign.start, textDirection: TextDirection.rtl,),
       ),
     ),
   );
@@ -121,7 +121,7 @@ Widget buildFrontFace(BuildContext context, String question) {
     child: Center(
         child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Text(question,style: const TextStyle(fontSize: 24),textAlign: TextAlign.center,),
+      child: Text(question,style: const TextStyle(fontSize: 24),textAlign: TextAlign.start, textDirection: TextDirection.rtl,),
     )),
   );
 }

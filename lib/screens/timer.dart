@@ -131,55 +131,56 @@ class _TimerScreenState extends State<TimerScreen> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
+                SizedBox(
+                  height:250,
+                  width: 200,
+                  child: SvgPicture.asset('assets/images/timer.svg', fit: BoxFit.cover,),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+                if (_dateTime != null)
+                  Text(
+                    'عدد الأشــهر الـمتبقية: $months\n'
+                        'عدد الأيــام الــمتبقيـة: $days\n'
+                        'عدد الساعات المتبقية: $hours\n'
+                        'عدد الدقائق المتبقية  : $minutes\n'
+                        'عدد الثـواني الـمتبقية  : $seconds',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    textAlign: TextAlign.right,
+                  ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
+                if (_isTimerRunning)
+                  Text(
+                    'تاريخ البكالوريا هو: $formattedDate',
+                    style: const TextStyle(fontSize: 20,fontWeight:FontWeight.w300 ),
 
-              SizedBox(
-                height:300,
-                width: 250,
-                child: SvgPicture.asset('assets/images/timer.svg', fit: BoxFit.cover,),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.10,),
-              if (_dateTime != null)
-                Text(
-                  'عدد الأشــهر الـمتبقية: $months\n'
-                      'عدد الأيــام الــمتبقيـة: $days\n'
-                      'عدد الساعات المتبقية: $hours\n'
-                      'عدد الدقائق المتبقية  : $minutes\n'
-                      'عدد الثـواني الـمتبقية  : $seconds',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  textAlign: TextAlign.right,
-                ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
-              if (_isTimerRunning)
-                Text(
-                  'تاريخ البكالوريا هو: $formattedDate',
-                  style: const TextStyle(fontSize: 20,fontWeight:FontWeight.w300 ),
 
-
-                  textAlign: TextAlign.right,
+                    textAlign: TextAlign.right,
+                  ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
+                    fixedSize: Size(MediaQuery.of(context).size.width * 0.6, 60),
+                  ),
+                  onPressed: () {
+                    if (_isTimerRunning) {
+                      _stopTimer();
+                    } else {
+                      _showDatePicker();
+                    }
+                  },
+                  child:  Text(
+                    _isTimerRunning ? 'ايقاف المؤقت' : 'اضافة تاريخ',
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05,),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  foregroundColor: Colors.white,
-                  fixedSize: Size(MediaQuery.of(context).size.width * 0.7, 60),
-                ),
-                onPressed: () {
-                  if (_isTimerRunning) {
-                    _stopTimer();
-                  } else {
-                    _showDatePicker();
-                  }
-                },
-                child:  Text(
-                  _isTimerRunning ? 'ايقاف المؤقت' : 'اضافة تاريخ',
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

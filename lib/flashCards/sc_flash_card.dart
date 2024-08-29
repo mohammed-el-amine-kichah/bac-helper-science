@@ -84,8 +84,8 @@ class _ScFlashCardState extends State<ScFlashCard> {
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.45,
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      width: MediaQuery.of(context).size.width ,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24), // Rounded corners
                         boxShadow: [

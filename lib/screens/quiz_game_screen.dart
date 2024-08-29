@@ -22,6 +22,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
   bool isRightAnswer = false;
+  double length = 0;
   Answer? selectedAnswer;
   Answer? correctAnswer;
   bool isAnswered = false; // To track if the user has answered
@@ -32,6 +33,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
 
    // Initialize questionList here
    questionList = getQuizQuestions(widget.quizType, widget.s);
+   length =  widget.quizType == 'شخصيات' ? 0.28 : 0.15;
  }
 
  void _showErrorMessage() {
@@ -98,11 +100,11 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                   .size
                   .height * 0.1),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 height: MediaQuery
                     .of(context)
                     .size
-                    .height * 0.15,
+                    .height  * length,
                 width: MediaQuery
                     .of(context)
                     .size
