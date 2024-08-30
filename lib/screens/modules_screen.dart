@@ -28,7 +28,6 @@ class ModulesScreen extends StatelessWidget {
       Subject(name: 'اللغة الانجليزية', asset: 'assets/images/lessons.svg'),
       Subject(name: 'التاريخ', asset: 'assets/images/lessons.svg'),
       Subject(name: 'الجغرافيا', asset: 'assets/images/lessons.svg'),
-
       Subject(name: 'العلوم الاسلامية', asset: 'assets/images/lessons.svg'),
       Subject(name: 'الفلسفة', asset: 'assets/images/lessons.svg'),
     ];

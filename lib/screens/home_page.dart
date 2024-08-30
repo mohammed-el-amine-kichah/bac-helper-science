@@ -1,6 +1,7 @@
 
 
 import 'package:bac_helper_sc/components/feature_card.dart';
+import 'package:bac_helper_sc/screens/bac_exams_and_solutions.dart';
 import 'package:bac_helper_sc/screens/modules_screen.dart';
 import 'package:bac_helper_sc/screens/quiz_selection_screen.dart';
 import 'package:flutter/material.dart';
@@ -202,6 +203,7 @@ class HomePage extends StatelessWidget {
                          imageAsset:  'assets/images/sujet_bac.svg',
                          title: 'مواضيع و حلول',
                          onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => BacExamsAndSolutions()));
 
                          }
                      ),
