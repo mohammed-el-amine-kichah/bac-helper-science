@@ -4,6 +4,7 @@ import 'package:bac_helper_sc/components/feature_card.dart';
 import 'package:bac_helper_sc/screens/bac_exams_and_solutions.dart';
 import 'package:bac_helper_sc/screens/modules_screen.dart';
 import 'package:bac_helper_sc/screens/quiz_selection_screen.dart';
+import 'package:bac_helper_sc/screens/resources_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -176,7 +177,7 @@ class HomePage extends StatelessWidget {
                          imageAsset:  'assets/images/resources.svg',
                          title: 'مصادر',
                          onTap: (){
-
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => ResourcesScreen()));
                          }
                      ),
 
