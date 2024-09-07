@@ -2,6 +2,8 @@ import 'package:bac_helper_sc/provider/dark_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/download_dialog.dart';
+
 class BacExamsAndSolutions extends StatefulWidget {
   const BacExamsAndSolutions({super.key});
 
@@ -56,6 +58,12 @@ class _BacExamsAndSolutionsState extends State<BacExamsAndSolutions>
 
   Future<void> downloadSubject(int year, Subject subject) async {
     // Implement download logic here
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const MyDownloadDialog();
+      },
+    );
     // For now, we'll just toggle the downloaded state
     setState(() {
       subject.downloaded = true;
