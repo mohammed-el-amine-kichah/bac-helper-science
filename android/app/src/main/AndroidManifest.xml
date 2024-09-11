@@ -1,5 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.bac_helper_sc">
+<application
         android:label="رفيق البكالوريا"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"

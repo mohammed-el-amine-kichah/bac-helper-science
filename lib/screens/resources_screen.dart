@@ -154,7 +154,7 @@ class ResourcesScreen extends StatelessWidget {
     ),
   ];
 
-  ResourcesScreen({Key? key}) : super(key: key);
+  ResourcesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +198,7 @@ class ResourcesScreen extends StatelessWidget {
           final link = filteredLinks[index];
           return Card(
             elevation: 2,
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: ListTile(
               leading: Icon(link.icon, color: _getColor(link.type)),
               title: Text(link.name),

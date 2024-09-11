@@ -5,9 +5,15 @@ import 'package:bac_helper_sc/screens/splash_screen.dart';
 import 'package:bac_helper_sc/screens/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await FirebaseAuth.instance.signInAnonymously();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeNotifier(),
@@ -24,7 +30,6 @@ class MyApp extends StatelessWidget {
     return Consumer<ThemeNotifier>(
       builder: (context, themeNotifier, child) {
         return MaterialApp(
-
           title: 'BAC App',
           theme: themeNotifier.isDarkMode ? AppThemes.darkTheme : AppThemes.lightTheme,
           home:  const SplashScreen(),

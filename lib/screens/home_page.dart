@@ -122,12 +122,12 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Stack(
+                const Stack(
                   children: [
                     ListTile(
-                      leading: const Icon(
+                      leading: Icon(
                           FontAwesomeIcons.instagram, color: Colors.white),
-                      title: const Text(
+                      title: Text(
                         "Follow me on Instagram",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -137,7 +137,7 @@ class HomePage extends StatelessWidget {
                       ),
                       onTap: _launchInstagram,
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
 
                   ],
                 ),
@@ -194,11 +194,6 @@ class HomePage extends StatelessWidget {
                         },
                       ),
                       FeatureCardComponent(
-                        imageAsset: 'assets/images/to_do_list.svg',
-                        title: 'قائمة المهام',
-                        onTap: () {},
-                      ),
-                      FeatureCardComponent(
                         imageAsset: 'assets/images/flash_card.svg',
                         title: 'بطاقات المراجعة',
                         onTap: () {
@@ -250,7 +245,7 @@ class HomePage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  BacExamsAndSolutions(),
+                                  const BacExamsAndSolutions(),
                             ),
                           );
                         },

@@ -11,7 +11,7 @@ import '../models/fetch_quiz_questions.dart';
 class QuizGameScreen extends StatefulWidget {
   final String quizType;
   final String s;
-  QuizGameScreen({required this.quizType,required this.s, super.key});
+  const QuizGameScreen({required this.quizType,required this.s, super.key});
 
   @override
   State<QuizGameScreen> createState() => _QuizGameScreenState();
@@ -78,7 +78,7 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
                   .size
                   .height * 0.03),
                Text(
-                widget.quizType + ' ' + widget.s,
+                '${widget.quizType} ${widget.s}',
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),

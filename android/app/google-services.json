@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "252852969425",
+    "project_id": "bac-se-bdf53",
+    "storage_bucket": "bac-se-bdf53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252852969425:android:b84411765daf4887360af0",
+        "android_client_info": {
+          "package_name": "com.example.bac_helper_sc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEqwv_SBNyULOaARR1Ivr2fMW4vPXTW64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
