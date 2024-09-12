@@ -54,8 +54,8 @@ class _BacExamsAndSolutionsState extends State<BacExamsAndSolutions>
       ];
 
       for (var subject in subjectsByYear[year]!) {
-        subject.examDownloaded = prefs.getBool('${year}${subject.exam}_exam') ?? false;
-        subject.solutionDownloaded = prefs.getBool('${year}${subject.exam}_solution') ?? false;
+        subject.examDownloaded = prefs.getBool('$year${subject.exam}_exam') ?? false;
+        subject.solutionDownloaded = prefs.getBool('$year${subject.exam}_solution') ?? false;
       }
     }
     setState(() {});

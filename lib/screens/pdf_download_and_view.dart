@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PdfDownloadViewer extends StatefulWidget {
   final String exam;
   final String module;
 
-  const PdfDownloadViewer({super.key,required this.module ,required this.exam});
+  const PdfDownloadViewer({super.key, required this.module, required this.exam});
 
   @override
   _PdfDownloadViewerState createState() => _PdfDownloadViewerState();
@@ -34,13 +34,11 @@ class _PdfDownloadViewerState extends State<PdfDownloadViewer> {
       final file = File('${dir.path}/bac_${widget.exam}.pdf');
 
       if (await file.exists()) {
-        // If the file exists locally, use it
         setState(() {
           pdfPath = file.path;
           isLoading = false;
         });
       } else {
-        // If the file doesn't exist, download it
         await downloadAndSavePdf(file);
       }
     } catch (e) {
@@ -48,19 +46,15 @@ class _PdfDownloadViewerState extends State<PdfDownloadViewer> {
       setState(() {
         isLoading = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error loading PDF: $e')),
-      );
+      _showErrorSnackBar('Error loading PDF: $e');
     }
   }
 
   Future<void> downloadAndSavePdf(File file) async {
     try {
-      // Get the PDF file from Firebase Storage
       final ref = FirebaseStorage.instance.ref('2024/bac${widget.exam}.pdf');
       final bytes = await ref.getData();
 
-      // Write the file
       await file.writeAsBytes(bytes!);
 
       setState(() {
@@ -72,10 +66,14 @@ class _PdfDownloadViewerState extends State<PdfDownloadViewer> {
       setState(() {
         isLoading = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error downloading PDF: $e')),
-      );
+      _showErrorSnackBar('Error downloading PDF: $e');
     }
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -83,20 +81,19 @@ class _PdfDownloadViewerState extends State<PdfDownloadViewer> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('${widget.module}'),
+        title: Text(widget.module),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : pdfPath != null
-          ? Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: PDFView(
-          filePath: pdfPath!,
-          enableSwipe: true,
-          swipeHorizontal: false,
-          autoSpacing: false,
-          pageFling: false,
-        ),
+          ? SfPdfViewer.file(
+        File(pdfPath!),
+        enableDoubleTapZooming: true,
+        enableTextSelection: true,
+        onDocumentLoadFailed: (PdfDocumentLoadFailedDetails details) {
+          print('Error loading PDF: ${details.error}');
+          _showErrorSnackBar('Error loading PDF: ${details.error}');
+        },
       )
           : const Center(child: Text('نعتذر الملف غير متوفر')),
     );
