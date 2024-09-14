@@ -17,10 +17,10 @@ class Quiz {
 class QuizSelectionScreen extends StatelessWidget {
   const QuizSelectionScreen({super.key});
   void _showUnitSelectionDialog(bool isDarkMode,BuildContext context, String quizType) {
-    if (quizType == 'مصطلحات الجغرافيا' || quizType == 'مصطلحات التاريخ')
+    if (quizType == 'مصطلحات الجغرافيا' || quizType == 'مصطلحات التاريخ') {
       Navigator.push(context, MaterialPageRoute(builder: (context) =>  QuizGameScreen(quizType: quizType, s:'الوحدة الأولى',)));
-
-   else showDialog(context: context,
+    } else {
+      showDialog(context: context,
         builder: (BuildContext context) {
              return AlertDialog(
                 title: const Text('اختر الوحدة', textAlign: TextAlign.center,),
@@ -114,6 +114,7 @@ class QuizSelectionScreen extends StatelessWidget {
               );
         }
     );
+    }
 
   }
 

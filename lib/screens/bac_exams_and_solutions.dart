@@ -1,5 +1,6 @@
 import 'package:bac_helper_sc/provider/dark_mode.dart';
 import 'package:bac_helper_sc/screens/pdf_download_and_view.dart';
+import 'package:bac_helper_sc/services/check_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,7 +77,7 @@ class _BacExamsAndSolutionsState extends State<BacExamsAndSolutions>
     }
   }
 
-  Widget buildSubjectList(bool isCorrection) {
+  Widget buildSubjectList(bool isCorrection)  {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       itemCount: subjectsByYear.length,
@@ -118,11 +119,18 @@ class _BacExamsAndSolutionsState extends State<BacExamsAndSolutions>
                           ? Colors.white70
                           : Colors.black87,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       String examCode = isCorrection
                           ? '$year${subject.exam}-correction'
                           : '$year${subject.exam}';
-                      if (!isDownloaded) {
+                      dynamic cnx = CheckConnection();
+                      if( !await cnx.isConnected()) {
+                        ScaffoldMessenger.of(context)
+                          ..removeCurrentSnackBar()
+                          ..showSnackBar(const SnackBar(
+                              content: Text('لا يوجد اتصال بالانترنت',textAlign: TextAlign.center,)));
+                        return;
+                      } else  if (!isDownloaded) {
                         setDownloadedState(year, subject.exam, isCorrection, true);
                       }
                       Navigator.push(
