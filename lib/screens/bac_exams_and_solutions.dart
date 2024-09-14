@@ -39,7 +39,7 @@ class _BacExamsAndSolutionsState extends State<BacExamsAndSolutions>
   }
 
   Future<void> fetchSubjects() async {
-    for (int year = 2024; year >= 2008; year--) {
+    for (int year = 2024; year >= 2011; year--) {
       subjectsByYear[year] = [
         Subject(name: 'علوم الطبيعة و الحياة', exam: '-sciences-se'),
         Subject(name: 'الرياضيات', exam: '-math-se'),
