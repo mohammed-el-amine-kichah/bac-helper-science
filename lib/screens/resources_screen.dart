@@ -220,7 +220,7 @@ class ResourcesScreen extends StatelessWidget {
       case ResourceType.socialMedia:
         return Colors.blue;
       case ResourceType.drive:
-        return Colors.green;
+        return Colors.deepPurple;
     }
   }
 

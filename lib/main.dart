@@ -15,10 +15,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeNotifier(),
-      child: const MyApp(),
-    ),
+      Builder(builder: (context) {
+        final mediaQueryData = MediaQuery.of(context);
+        final mediaQueryDataWithLinearTextScaling = mediaQueryData
+            .copyWith(textScaler: const TextScaler.linear(1.0));
+        return MediaQuery(data: mediaQueryDataWithLinearTextScaling, child: ChangeNotifierProvider(
+          create: (context) => ThemeNotifier(),
+          child: const MyApp(),
+        ),);
+      }),
+
   );
 }
 
@@ -33,6 +39,7 @@ class MyApp extends StatelessWidget {
           title: 'BAC App',
           theme: themeNotifier.isDarkMode ? AppThemes.darkTheme : AppThemes.lightTheme,
           home:  const SplashScreen(),
+          debugShowCheckedModeBanner: false,
           routes: {
             'timer' :(context) => const TimerScreen(),
             'calculator' : (context) => const AverageCalculator(),

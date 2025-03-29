@@ -20,34 +20,45 @@ class FeatureCardComponent extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Card(
-        color: isDarkMode ? Colors.grey[800] : Colors.white, // Change color based on theme
-        elevation: 8,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 10,),
-            AspectRatio(
-              aspectRatio: 16 / 10, // Adjust the aspect ratio as needed
-              child: SvgPicture.asset(
-                imageAsset,
-                fit: BoxFit.contain, // Adjust as needed
-              ),
+      child: Stack(
+
+        children: [
+          Card(
+            color: isDarkMode ? Colors.grey[800] : Colors.white, // Change color based on theme
+            elevation: 8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 10,),
+                AspectRatio(
+                  aspectRatio: 16 / 10, // Adjust the aspect ratio as needed
+                  child: SvgPicture.asset(
+                    imageAsset,
+                    fit: BoxFit.contain, // Adjust as needed
+                  ),
+                ),
+              ],
             ),
-            Padding(
+          ),
+          Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
                 title,
                 textAlign: TextAlign.center,
                 textDirection: TextDirection.rtl,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontSize: 14, // Adjust font size if needed
+                  fontSize: 16, // Adjust font size if needed
                   color: isDarkMode ? Colors.white : Colors.black, // Change text color based on theme
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ]
+
       ),
     );
   }
